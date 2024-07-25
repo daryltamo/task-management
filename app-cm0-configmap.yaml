@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  docker.env: |-
+    NODE_ENV=production
+    PORT=80
+    MONGODB_URL=mongodb://mongo:27017/task-management
+    LOG_LEVEL=info
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: app
+  name: app-cm0
