@@ -3,9 +3,14 @@ kind: ConfigMap
 metadata:
   name: app-config
   namespace: myapp
+  annotations:
+    use-subpath: "true"
 data:
-  docker.env: |
-    # Your environment variables here
+  docker.env: |-
+    NODE_ENV=production
+    PORT=80
+    MONGODB_URL=mongo
+    LOG_LEVEL=info
 
 ---
 apiVersion: v1
@@ -13,9 +18,40 @@ kind: ConfigMap
 metadata:
   name: promtail-config
   namespace: myapp
+  annotations:
+    use-subpath: "true"
 data:
   promtail.yml: |
-    # Your Promtail configuration here
+    server:
+      http_listen_port: 9080
+      grpc_listen_port: 0
+    positions:
+      filename: /tmp/positions.yaml
+    clients:
+      - url: http://loki:3100/loki/api/v1/push
+    scrape_configs:
+      - job_name: "__service__name__"
+        pipeline_stages:
+          - json:
+              expressions:
+                level: level
+                message: message
+                timestamp: timestamp
+                service: service
+                meta:
+          - labels:
+              level:
+          - timestamp:
+              source: timestamp
+              format: RFC3339Nano
+        static_configs:
+          - targets:
+              - localhost
+            labels:
+              job: "__service_name__"
+              instance: "__instance_name__"
+              env: "production"
+              __path__: /var/log/app.log
 
 ---
 apiVersion: v1
@@ -23,7 +59,18 @@ kind: ConfigMap
 metadata:
   name: prometheus-config
   namespace: myapp
+  annotations:
+    use-subpath: "true"
 data:
   prometheus.yml: |
-    # Your Prometheus configuration here
+    global:
+      scrape_interval: 15s
+    scrape_configs:
+      - job_name: "prometheus"
+        static_configs:
+          - targets: ["localhost:9090"]
+      - job_name: "app"
+        metrics_path: "/metrics"
+        static_configs:
+          - targets: ["app:80"]
 
