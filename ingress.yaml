@@ -1,18 +1,27 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-ingress
+  name: myapp-ingress
+  namespace: myapp
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: localhost
-    http:
+  - http:
       paths:
-      - path: /
+      - path: /app(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: app
             port:
-              number: 8081
+              number: 80
+      - path: /grafana(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+
