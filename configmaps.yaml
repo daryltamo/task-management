@@ -9,7 +9,7 @@ data:
   docker.env: |-
     NODE_ENV=production
     PORT=80
-    MONGODB_URL=mongo
+    MONGODB_URL=mongodb://mongo:27017/test
     LOG_LEVEL=info
 
 ---

@@ -51,6 +51,9 @@ spec:
       containers:
       - name: mongo
         image: mongo:5
+        command: ["/bin/sh", "-c"]
+        args:
+        - rm -f /data/db/mongod.lock && mongod --bind_ip_all;
         livenessProbe:
           exec:
             command:
