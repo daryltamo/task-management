@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: your-app-image:tag
+        image: docker.io/daryltamo/task-management-app 
         ports:
         - containerPort: 80
         volumeMounts:
