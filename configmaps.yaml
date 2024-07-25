@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: myapp
+data:
+  docker.env: |
+    # Your environment variables here
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: promtail-config
+  namespace: myapp
+data:
+  promtail.yml: |
+    # Your Promtail configuration here
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: myapp
+data:
+  prometheus.yml: |
+    # Your Prometheus configuration here
+
