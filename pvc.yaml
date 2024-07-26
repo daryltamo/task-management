@@ -6,9 +6,10 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
+  storageClassName: myapp-local-storage
   resources:
     requests:
-      storage: 1Gi
+      storage: 500Mi
 
 ---
 apiVersion: v1
@@ -19,9 +20,10 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
+  storageClassName: myapp-local-storage
   resources:
     requests:
-      storage: 1Gi
+      storage: 500Mi
 
 ---
 apiVersion: v1
@@ -32,7 +34,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteMany
+  storageClassName: myapp-local-storage
   resources:
     requests:
-      storage: 1Gi
-
+      storage: 500Mi

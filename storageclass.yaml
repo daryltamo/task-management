@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: myapp-local-storage
+  namespace: myapp
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "false"
+reclaimPolicy: Delete
+provisioner: k8s.io/minikube-hostpath
+volumeBindingMode: Immediate
