@@ -9,6 +9,7 @@ spec:
   storageClassName: myapp-local-storage
   resources:
     requests:
+    
       storage: 500Mi
 
 ---
